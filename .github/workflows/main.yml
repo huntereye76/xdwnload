@@ -1,0 +1,69 @@
+name: Run Playwright Script
+
+on:
+  workflow_dispatch:   # manual run button
+  push:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install playwright requests
+          python -m playwright install --with-deps
+
+      - name: 🖥 Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: ▶️ Run script (virtual display)
+        run: xvfb-run -a python ply.py
+
+      - name: 📤 Upload video (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: downloaded-video
+          path: video.mp4name: Run Playwright Script
+
+on:
+  workflow_dispatch:   # manual run button
+  push:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install playwright requests
+          python -m playwright install --with-deps
+
+      - name: 🖥 Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: ▶️ Run script (virtual display)
+        run: xvfb-run -a python ply.py
+
+      - name: 📤 Upload video (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: downloaded-video
+          path: video.mp4
